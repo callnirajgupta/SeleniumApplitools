@@ -15,7 +15,7 @@ public class VisualTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+"//src//test//resources//chromedriverwin.exe");
+		System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+"//src//test//resources//chromedriver.exe");
 		WebDriver driver=null;
 		Eyes eyes = new Eyes();
 
@@ -36,7 +36,7 @@ public class VisualTest {
 			WebDriverWait wait= new WebDriverWait(driver,60);
 			wait.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("Courses")));
 			driver.findElement(By.partialLinkText("Courses")).click();
-			driver.findElement(By.partialLinkText("Products")).click();
+			//driver.findElement(By.partialLinkText("Products")).click();
 			Thread.sleep(2000);
 			eyes.checkWindow("course page");
 			eyes.close();
