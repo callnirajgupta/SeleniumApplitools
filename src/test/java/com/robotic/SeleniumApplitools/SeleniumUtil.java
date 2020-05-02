@@ -1,15 +1,19 @@
 package com.robotic.SeleniumApplitools;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
 
+import javax.imageio.ImageIO;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import com.google.common.io.Files;
@@ -17,6 +21,9 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
 import cucumber.api.Scenario;
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 public class SeleniumUtil {
 	
@@ -118,12 +125,22 @@ public class SeleniumUtil {
 		test.log(LogStatus.FAIL, failureMessage,snapPath);
 		
 	}
+	public static  void failTestStepWebElement(WebDriver driver,ExtentTest test,String failureMessage,WebElement logoElemnent) throws IOException{
+		//String imagePath=takeScreenShotReturnPath();
+		 String screenShotPath = System.getProperty("user.dir") + "\\src\\test\\resources\\SnapShot\\";
+		Screenshot logoElementScreenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver,logoElemnent);
+		ImageIO.write(logoElementScreenshot.getImage(), "png", new File(screenShotPath+"testlogo.png"));
+		
+		String snapPath=test.addScreenCapture(screenShotPath+"testlogo.png");  
+		test.log(LogStatus.FAIL, failureMessage,snapPath);
+		
+	}
 	
 	public static  void failTestStepExpected(WebDriver driver,ExtentTest test,String failureMessage,String screenshotFile) throws IOException{
 		
 		
 		String snapPath=test.addScreenCapture(screenshotFile);
-		                
+		         System.out.println("print image path for step:");       
 		//String snapPath=test.addScreenCapture(imagePath);
 		
 		test.log(LogStatus.FAIL, failureMessage,snapPath);
